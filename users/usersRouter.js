@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const Centers = require('../users/usersModel.js');
 // const Candidates = require('../candidates/candidates-model.js');
-const restricted = require('../auth/auth-middleware.js');
+// const restricted = require('../auth/auth-middleware.js');
 
 //PUBLIC OPERATIONS
 //get centers with completed profiles
