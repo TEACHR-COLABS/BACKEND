@@ -1,11 +1,6 @@
-const express = require('express');
+require('dotenv').config();
 
-const server = express();
-
-//ROUTES
-server.get('/', (req,res) => {
-    res.send('We are on home')
-});
+const server = require('./api/server.js');
 
 
 //App listening
