@@ -2,7 +2,7 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const Centers = require('../centers/centers-model.js');
+const Users = require('../users/usersModel.js');
 const secrets = require('../config/secrets.js');
 
 router.post('/register', (req, res) => {
@@ -11,7 +11,7 @@ router.post('/register', (req, res) => {
     admin.password = hash;
     //console.log(admin);
 
-    Centers.addCenter(admin)
+    Users.addUser(admin)
         .then(savedAdmin => {
             //console.log('saved admin:', savedAdmin);
             if (savedAdmin) {
@@ -19,7 +19,7 @@ router.post('/register', (req, res) => {
                 res.status(200).json({ 
                     id: savedAdmin.id,
                     email: savedAdmin.email,
-                    profileComplete: savedAdmin.profileComplete,
+                    // profileComplete: savedAdmin.profileComplete,
                     token 
                 });
             } else {
@@ -34,7 +34,7 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
     let {email, password} = req.body;
-    Centers.findCenterBy({ email })
+    Users.findUsersBy({ email })
     .first()
     .then(admin => {
         if (admin && bcrypt.compareSync(password, admin.password)) {
@@ -42,7 +42,6 @@ router.post('/login', (req, res) => {
             res.status(200).json({ 
                 id: admin.id,
                 email: admin.email,
-                profileComplete: admin.profileComplete,
                 token 
             });
         } else {

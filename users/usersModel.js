@@ -3,6 +3,7 @@ const db = require('../config/dbConfig.js');
 module.exports = {
     addUser,
     findUsers,
+    findUsersBy,
     findUsersById,
     findClassesByUserId,
     removeUser,
@@ -20,7 +21,11 @@ function findUsers() {
         .select('id', 'email', 'firstName', 'lastName', 'school')
         .orderBy('id');
 }
-
+function findUsersBy(filter) {
+    return db('users')
+        .where(filter)
+        .first();
+}
 function findUsersById(id) {
     return db('users')
         .where({ id })

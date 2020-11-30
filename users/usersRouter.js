@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const Users = require('../users/usersModel.js');
 // const Candidates = require('../candidates/candidates-model.js');
-// const restricted = require('../auth/auth-middleware.js');
+const restricted = require('../auth/auth-middleware.js');
 
 //PUBLIC OPERATIONS
 router.get('/', (req, res) => {
@@ -38,27 +38,27 @@ router.get('/:id', (req, res) => {
 });
 
 //AUTH OPERATIONS
-//update a center
-// router.put('/:id/profile', restricted, (req, res) => {
-//     const { id } = req.params;
-//     const changes = {
-//         profileComplete: true,
-//         ...req.body
-//     }
-//     Centers.updateCenter(id, changes)
-//         .then(updated => {
-//             //console.log(updated);
-//             if (updated) {
-//                 res.status(200).json(updated)
-//             } else {
-//                 res.status(404).json({ message: 'No center with this ID exists.' })
-//             }  
-//         })
-//         .catch(error => {
-//             console.log(error);
-//             res.status(500).json({ message: 'There was an error updating the specified center.' })
-//         });
-// });
+// update a user
+router.put('/:id/profile', restricted, (req, res) => {
+    const { id } = req.params;
+    const changes = {
+        profileComplete: true,
+        ...req.body
+    }
+    Users.updateUser(id, changes)
+        .then(updated => {
+            //console.log(updated);
+            if (updated) {
+                res.status(200).json(updated)
+            } else {
+                res.status(404).json({ message: 'No user with this ID exists.' })
+            }  
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({ message: 'There was an error updating the specified user.' })
+        });
+});
 
 //delete a center
 // router.delete('/:id', restricted, (req, res) => {
