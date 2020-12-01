@@ -1,8 +1,10 @@
 const router = require('express').Router();
 
 const Users = require('../users/usersModel.js');
-// const Candidates = require('../candidates/candidates-model.js');
+const Class = require('../classes/classesModel.js');
 const restricted = require('../auth/auth-middleware.js');
+// eslint-disable-next-line no-unused-vars
+const { findClassById } = require('../classes/classesModel.js');
 
 //PUBLIC OPERATIONS
 router.get('/', (req, res) => {
@@ -65,6 +67,7 @@ router.delete('/:id', restricted, (req, res) => {
     Users.findUserById(id)
     .then(user => {
         Users.removeUser(user.id)
+        // eslint-disable-next-line no-unused-vars
         .then(deleted => {
             res.status(200).json({removed: user});
         })
@@ -80,6 +83,87 @@ router.delete('/:id', restricted, (req, res) => {
 });
 
 
+// add a new class
+router.post('/:id/class', restricted, (req, res) => {
+    const newClass = req.body;
+    const { id } = req.params;
+
+    Users.findUserById(id)
+    .then(user => {
+        if (user) {
+            Class.addClass(newClass, id)
+            .then(
+                teachrClass => {
+                    res.status(201).json(teachrClass);
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(500).status({ message: 'There was an error creating a new class.' })
+            });
+        } else {
+            res.status(404).json({ message: 'No user with this ID exists.' })
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({ message: 'There was an error while creating a new class profile.' })
+    });
+});
+
+//update a candidate
+router.put('/:usId/candidates/:claId', restricted, (req, res) => {
+    const usId = req.params.usId;
+    const claId = req.params.claId;
+    const changes = {...req.body}
+    Class.findClassById(claId)
+    .then(classData => {
+        console.log(classData)
+        if (usId == classData.userID){
+            Class.updateClass(classData.id, changes)
+            .then(updated => {
+                res.status(200).json(updated);
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(500).json({ message: 'There was an error updating this class.' })
+            })
+        } else {
+            res.status(404).json({ message: 'No class with this ID exists with this user.' })
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({ message: 'There was an error retrieving the specified class.' })
+    });
+});
+
+//delete a candidate
+router.delete('/:usId/candidates/:claId', restricted, (req, res) => {
+    const usId = req.params.usId;
+    const claId = req.params.claId;
+    Class.findCandidateById(claId)
+    .then(classData => {
+        console.log(classData)
+        if (usId == classData.userID){
+            Class.removeClass(classData.id)
+            // eslint-disable-next-line no-unused-vars
+            .then(deleted => {
+                res.status(200).json({removed: classData});
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(404).json({ message: 'No class with this ID exists with this center.'});
+            })
+        } else {
+            res.status(404).json({ message: 'You are not authorized to remove this class.' }); 
+        }
+        
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({ message: 'There was an error retrieving the specified class.' })
+    });
+});
 
 
 module.exports = router;
