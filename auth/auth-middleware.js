@@ -9,8 +9,6 @@ module.exports = (req, res, next) => {
   if (token) {
     jwt.verify(token, secrets.jwtSecret, (error, decodedToken) => {
       let urlId = parseInt(req.url.split("/")[1]);
-      // console.log(urlId);
-      // console.log(decodedToken.sub);
       if (error || isNotAuthorized(decodedToken.sub, urlId)) {
         res.status(401).json({ message: 'Please provide valid credentials.' });
       } else {

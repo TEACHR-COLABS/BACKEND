@@ -3,8 +3,6 @@ const router = require('express').Router();
 const Users = require('../users/usersModel.js');
 const Class = require('../classes/classesModel.js');
 const restricted = require('../auth/auth-middleware.js');
-// eslint-disable-next-line no-unused-vars
-const { findClassById } = require('../classes/classesModel.js');
 
 //PUBLIC OPERATIONS
 router.get('/', (req, res) => {
@@ -18,7 +16,7 @@ router.get('/', (req, res) => {
     });
 });
 
-// get users by id, as well as all classes from center
+// get users by id, as well as all classes from users
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     Users.findUsersById (id)
@@ -64,7 +62,7 @@ router.put('/:id/profile', restricted, (req, res) => {
 //delete a center
 router.delete('/:id', restricted, (req, res) => {
     const { id } = req.params;
-    Users.findUserById(id)
+    Users.findUsersById(id)
     .then(user => {
         Users.removeUser(user.id)
         // eslint-disable-next-line no-unused-vars
@@ -88,7 +86,7 @@ router.post('/:id/class', restricted, (req, res) => {
     const newClass = req.body;
     const { id } = req.params;
 
-    Users.findUserById(id)
+    Users.findUsersById(id)
     .then(user => {
         if (user) {
             Class.addClass(newClass, id)
