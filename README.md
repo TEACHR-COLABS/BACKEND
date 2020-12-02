@@ -27,15 +27,15 @@ This repository will hold source codes for the back end script. Alternatively de
 | school         | string                                     |
 |                |                                            |
 | className      | string                                     |
-| classYear      | string (formatted as "YYYY-MM-DD"          |
-| class Subject  | string  |
+| classYear      | string (formatted as "YYYY-MM-DD")         |
+| class Subject  | string                                     |
 |                                                             |
 |                                                             |
 | studentNumber  | integer                                    |
 | studentMail    | string (maximum of 256 characters)         |
 | assessmentName | string                                     |
 | Date           | string                                     |
-| CountCheck     | integer(Default value)                                     |
+| CountCheck     | integer(Default value)                     |
 |                |                                            |
 | All IDs        | integer                                    |
 
@@ -185,6 +185,9 @@ classId
 - where `:id` is the id of the reserved class to be removed.
 - Must include a valid token
 
-### PostMan API Collection: -->
-
-https://explore.postman.com/templates/4442
+### STACKS
+NODE EXPRESS
+MONGO DB
+HELMET
+JSON WEB TOKEN
+JEST

@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+
+const Students = require("../students/studentsModel");
 const Classes = require('../classes/classesModel');
 
 //get all candidates
