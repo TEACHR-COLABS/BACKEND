@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         });
 });
 
-//get a single candidate by id
+//get a single class by id
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     Classes.findClassById(id)
