@@ -7,7 +7,8 @@ module.exports = {
     findUsersById,
     findClassesByUserId,
     removeUser,
-    updateUser
+    updateUser,
+    // findStudentByUserId
 };
 
 async function addUser(user) {
@@ -50,3 +51,8 @@ function updateUser(id, changes) {
         .update(changes)
         .then(() => findUsersById(id));
 }
+
+// function findStudentByUserId(id) {
+//     return db('students')
+//         .where({ userId: id });
+// }

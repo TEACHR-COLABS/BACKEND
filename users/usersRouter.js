@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const Users = require('../users/usersModel.js');
 const Class = require('../classes/classesModel.js');
+// const Students = require("../students/studentsModel.js");
 const restricted = require('../auth/auth-middleware.js');
 
 //PUBLIC OPERATIONS
@@ -30,6 +31,15 @@ router.get('/:id', (req, res) => {
             console.log(error);
             res.status(500).json({ message: 'There was an error retrieving the classes.' })
         });
+        // Users.findStudentByUserId(id)
+        // .then(studs => {
+        //     res.status(200).json({user, studs})
+        // })
+        // .catch(error => {
+        //     console.log(error);
+        //     res.status(500).json({ message: 'There was an error retrieving the students.' })
+        // });
+
     })
     .catch(error => {
         console.log(error);
