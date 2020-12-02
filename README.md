@@ -28,7 +28,7 @@ This repository will hold source codes for the back end script. Alternatively de
 |                |                                            |
 | className      | string                                     |
 | classYear      | string (formatted as "YYYY-MM-DD"          |
-| class Subject  | string (formatted as "HH:MM:SS" (24 hour)) |
+| class Subject  | string  |
 |                                                             |
 |                                                             |
 | studentNumber  | integer                                    |
