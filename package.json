@@ -4,7 +4,12 @@
   "description": "A product to help teachers mark spoken assessments fairly and quickly so they can lighten their loads - BACKEND",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
+  "engines": {
+    "node": "12.8.0",
+    "npm": "6.10.2"
   },
   "repository": {
     "type": "git",
@@ -22,6 +27,7 @@
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "gitignore": "^0.6.0",
     "helmet": "^4.2.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.12",
