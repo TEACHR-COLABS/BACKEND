@@ -77,7 +77,7 @@ school
 email
 password
 ```
-###     PRIVATE
+###     PRIVATE (USER)
 
 ### Update existing user
 
@@ -90,6 +90,23 @@ password
 - Must include a valid token
 ### Delete existing user
 - Make a Delete request to `/api/users/:id/`
+- Must include a valid token
+
+###     PRIVATE (USER)
+
+### ADD A NEW CLASS TO A USER
+- Make a POST request to `/api/users/:id/class`
+- Required fields in the `req.body`:
+```
+className
+classYear
+classSubject
+```
+- Must include a valid token
+
+### ADD A NEW CLASS TO A USER
+- Make a PUT request to `/api/users/:usId/class/:claId`
+- Must include a valid token
 <!-- ### Instructor (Private)
 
 - This set of endpoints is only accessible to users with a valid token's role set to instructor

@@ -108,8 +108,8 @@ router.post('/:id/class', restricted, (req, res) => {
     });
 });
 
-//update a candidate
-router.put('/:usId/candidates/:claId', restricted, (req, res) => {
+//update a new class
+router.put('/:usId/class/:claId', restricted, (req, res) => {
     const usId = req.params.usId;
     const claId = req.params.claId;
     const changes = {...req.body}
@@ -135,11 +135,11 @@ router.put('/:usId/candidates/:claId', restricted, (req, res) => {
     });
 });
 
-//delete a candidate
-router.delete('/:usId/candidates/:claId', restricted, (req, res) => {
+//delete a class
+router.delete('/:usId/class/:claId', restricted, (req, res) => {
     const usId = req.params.usId;
     const claId = req.params.claId;
-    Class.findCandidateById(claId)
+    Class.findClassById(claId)
     .then(classData => {
         console.log(classData)
         if (usId == classData.userID){
