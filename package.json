@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "A product to help teachers mark spoken assessments fairly and quickly so they can lighten their loads - BACKEND",
+  "description": "TEACHR-BACKEND REST API",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
