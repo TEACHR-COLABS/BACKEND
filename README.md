@@ -7,7 +7,7 @@ This repository will hold source codes for the back end script. Alternatively de
 
 ## API link
 
-
+https://teachr-back-end.herokuapp.com/
 
 ## Scripts
 

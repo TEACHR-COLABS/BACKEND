@@ -51,8 +51,3 @@ function updateUser(id, changes) {
         .update(changes)
         .then(() => findUsersById(id));
 }
-
-// function findStudentByUserId(id) {
-//     return db('students')
-//         .where({ userId: id });
-// }
