@@ -48,7 +48,7 @@ https://teachr-back-end.herokuapp.com/
 #### Get all Users
 
 - Get all users (Require no token)
-- Make a GET request to `/api/users/`
+- Make a GET request to `/api/teachers/`
 
 #### Get all Users and Classes by ID from Users
 
@@ -65,7 +65,8 @@ firstName
 lastName
 email
 password
-school
+assessmentGroup
+assessmentType
 ```
 
 #### Login existing User

@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 // get users by id, as well as all students from teachers
 router.get('/:id', (req, res) => {
     const { id } = req.params;
-    Teachers.findUsersById (id)
+    Teachers.findTeachersById (id)
     .then(teacher => {
         const id = teacher.id;
         Teachers.findStudentsByTeacherId(id)
