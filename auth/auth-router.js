@@ -2,7 +2,7 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const Users = require('../users/usersModel.js');
+const Teachers = require('../teachers/teachers-model.js');
 const secrets = require('../config/secrets.js');
 
 router.post('/register', (req, res) => {
@@ -11,7 +11,7 @@ router.post('/register', (req, res) => {
     admin.password = hash;
     //console.log(admin);
 
-    Users.addUser(admin)
+    Teachers.addTeacher(admin)
         .then(savedAdmin => {
             //console.log('saved admin:', savedAdmin);
             if (savedAdmin) {
@@ -34,7 +34,7 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
     let {email, password} = req.body;
-    Users.findUsersBy({ email })
+    Teachers.findTeachersBy({ email })
     .first()
     .then(admin => {
         if (admin && bcrypt.compareSync(password, admin.password)) {

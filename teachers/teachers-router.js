@@ -1,15 +1,15 @@
 const router = require('express').Router();
 
-const Users = require('../users/usersModel.js');
-const Class = require('../classes/classesModel.js');
+const Teachers = require('./teachers-model');
+const Students = require('../students/students-model');
 // const Students = require("../students/studentsModel.js");
 const restricted = require('../auth/auth-middleware.js');
 
 //PUBLIC OPERATIONS
 router.get('/', (req, res) => {
-    Users.findUsers()
-    .then(users => {
-        res.status(200).json(users)
+    Teachers.findTeachers()
+    .then(teachers => {
+        res.status(200).json(teachers)
     })
     .catch(error => {
         console.log(error);
@@ -17,19 +17,19 @@ router.get('/', (req, res) => {
     });
 });
 
-// get users by id, as well as all classes from users
+// get users by id, as well as all students from teachers
 router.get('/:id', (req, res) => {
     const { id } = req.params;
-    Users.findUsersById (id)
-    .then(user => {
-        const id = user.id;
-        Users.findClassesByUserId(id)
-        .then(classes => {
-            res.status(200).json({user, classes})
+    Teachers.findUsersById (id)
+    .then(teacher => {
+        const id = teacher.id;
+        Teachers.findStudentsByTeacherId(id)
+        .then(students => {
+            res.status(200).json({teacher, students})
         })
         .catch(error => {
             console.log(error);
-            res.status(500).json({ message: 'There was an error retrieving the classes.' })
+            res.status(500).json({ message: 'There was an error retrieving the students.' })
         });
         // Users.findStudentByUserId(id)
         // .then(studs => {
@@ -54,13 +54,13 @@ router.put('/:id/profile', restricted, (req, res) => {
     const changes = {
         ...req.body
     }
-    Users.updateUser(id, changes)
+    Teachers.updateTeacher(id, changes)
         .then(updated => {
             //console.log(updated);
             if (updated) {
                 res.status(200).json(updated)
             } else {
-                res.status(404).json({ message: 'No user with this ID exists.' })
+                res.status(404).json({ message: 'No teacher with this ID exists.' })
             }  
         })
         .catch(error => {
@@ -69,15 +69,15 @@ router.put('/:id/profile', restricted, (req, res) => {
         });
 });
 
-//delete a center
+//delete a teacher
 router.delete('/:id', restricted, (req, res) => {
     const { id } = req.params;
-    Users.findUsersById(id)
-    .then(user => {
-        Users.removeUser(user.id)
+    Teachers.findUsersById(id)
+    .then(teacher => {
+        Teachers.removeTeacher(teacher.id)
         // eslint-disable-next-line no-unused-vars
         .then(deleted => {
-            res.status(200).json({removed: user});
+            res.status(200).json({removed: teacher});
         })
         .catch(error => {
             console.log(error);
@@ -91,79 +91,79 @@ router.delete('/:id', restricted, (req, res) => {
 });
 
 
-// add a new class
-router.post('/:id/class', restricted, (req, res) => {
-    const newClass = req.body;
+// add a new student
+router.post('/:id/students', restricted, (req, res) => {
+    const newStudent = req.body;
     const { id } = req.params;
 
-    Users.findUsersById(id)
-    .then(user => {
-        if (user) {
-            Class.addClass(newClass, id)
+    Teachers.findTeachersById(id)
+    .then(teacher => {
+        if (teacher) {
+            Students.addStudent(newStudent, id)
             .then(
-                teachrClass => {
-                    res.status(201).json(teachrClass);
+                student => {
+                    res.status(201).json(student);
             })
             .catch(error => {
                 console.log(error);
-                res.status(500).status({ message: 'There was an error creating a new class.' })
+                res.status(500).status({ message: 'There was an error creating a new student.' })
             });
         } else {
-            res.status(404).json({ message: 'No user with this ID exists.' })
+            res.status(404).json({ message: 'No teacher with this ID exists.' })
         }
     })
     .catch(error => {
         console.log(error);
-        res.status(500).json({ message: 'There was an error while creating a new class profile.' })
+        res.status(500).json({ message: 'There was an error while creating a new class student.' })
     });
 });
 
-//update a new class
-router.put('/:usId/class/:claId', restricted, (req, res) => {
-    const usId = req.params.usId;
-    const claId = req.params.claId;
+//update a new student
+router.put('/:tchId/students/:studId', restricted, (req, res) => {
+    const tchId = req.params.tchId;
+    const studId = req.params.studId;
     const changes = {...req.body}
-    Class.findClassById(claId)
-    .then(classData => {
-        console.log(classData)
-        if (usId == classData.userID){
-            Class.updateClass(classData.id, changes)
+    Students.findStudentById(studId)
+    .then(student => {
+        console.log(student)
+        if (tchId === student.teacherId){
+            Students.updateStudent(student.id, changes)
             .then(updated => {
                 res.status(200).json(updated);
             })
             .catch(error => {
                 console.log(error);
-                res.status(500).json({ message: 'There was an error updating this class.' })
+                res.status(500).json({ message: 'There was an error updating this student.' })
             })
         } else {
-            res.status(404).json({ message: 'No class with this ID exists with this user.' })
+            res.status(404).json({ message: 'No student with this ID exists with this teacher.' })
         }
     })
     .catch(error => {
         console.log(error);
-        res.status(500).json({ message: 'There was an error retrieving the specified class.' })
+        res.status(500).json({ message: 'There was an error retrieving the specified student.' })
     });
 });
 
 //delete a class
-router.delete('/:usId/class/:claId', restricted, (req, res) => {
-    const usId = req.params.usId;
-    const claId = req.params.claId;
-    Class.findClassById(claId)
-    .then(classData => {
-        console.log(classData)
-        if (usId == classData.userID){
-            Class.removeClass(classData.id)
+router.delete('/:tchId/class/:studId', restricted, (req, res) => {
+    const tchId = req.params.tchId;
+    const studId = req.params.studId;
+    Students.findStudentById(studId)
+    .then(student => {
+        console.log(student)
+        if (tchId === student.teacherId){
+            Students.removeStudent(student.id)
             // eslint-disable-next-line no-unused-vars
             .then(deleted => {
-                res.status(200).json({removed: classData});
+                res.status(200).json({removed: student});
             })
             .catch(error => {
                 console.log(error);
-                res.status(404).json({ message: 'No class with this ID exists with this center.'});
+                res.status(404).json({ message: 'No student with this ID exists with this teacher.'});
             })
         } else {
-            res.status(404).json({ message: 'You are not authorized to remove this class.' }); 
+            res.status(404).json({ message: 'You are not authorized to remove this student.' }); 
         }
         
     })
