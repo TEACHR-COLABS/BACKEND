@@ -72,7 +72,7 @@ router.put('/:id/profile', restricted, (req, res) => {
 //delete a teacher
 router.delete('/:id', restricted, (req, res) => {
     const { id } = req.params;
-    Teachers.findUsersById(id)
+    Teachers.findTeachersById(id)
     .then(teacher => {
         Teachers.removeTeacher(teacher.id)
         // eslint-disable-next-line no-unused-vars

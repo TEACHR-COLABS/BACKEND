@@ -7,9 +7,9 @@ const teacherRouter = require('../teachers/teachers-router');
 const studentRouter = require('../students/students-router');
 
 const server = express();
-
-server.use(helmet());
 server.use(cors());
+server.use(helmet());
+
 server.use(express.json());
 
 server.get('/', (req, res) => {
