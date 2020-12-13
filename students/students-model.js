@@ -8,9 +8,9 @@ module.exports = {
     updateStudent,
 };
 
-function addStudent(person, userId) {
+function addStudent(person, teacherId) {
     return db('students')
-        .insert({'userId': userId, ...person}, 'id')
+        .insert({'teacherId': teacherId, ...person}, 'id')
         .then(([id]) => {
             return findStudentById(id);
         });

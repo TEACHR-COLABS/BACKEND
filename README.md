@@ -7,7 +7,7 @@ This repository will hold source codes for the back end script. Alternatively de
 
 ## API link
 
-
+https://teachr-back-end.herokuapp.com/
 
 ## Scripts
 
@@ -48,7 +48,7 @@ This repository will hold source codes for the back end script. Alternatively de
 #### Get all Users
 
 - Get all users (Require no token)
-- Make a GET request to `/api/users/`
+- Make a GET request to `/api/teachers/`
 
 #### Get all Users and Classes by ID from Users
 
@@ -65,7 +65,8 @@ firstName
 lastName
 email
 password
-school
+assessmentGroup
+assessmentType
 ```
 
 #### Login existing User
